@@ -8,7 +8,7 @@ from time import time
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')  # Device configuration
-stride = 16 # TODO adjust stride based on image size
+stride = 32 # TODO adjust stride based on image size
 # Load the model
 model = network.modeling.__dict__['deeplabv3plus_mobilenet'](num_classes=19, output_stride=stride)
 checkpoint = torch.load('best_deeplabv3plus_mobilenet_cityscapes_os16.pth', map_location=device)
