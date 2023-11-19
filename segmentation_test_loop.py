@@ -25,10 +25,12 @@ transform = T.Compose([
 # Load and transform the image
 original_img1 = cv2.imread('street2.jpg')
 img1 = cv2.cvtColor(original_img1, cv2.COLOR_BGR2RGB)  # Convert BGR to RGB
+img1 = cv2.resize(img1, (2688, 1520))
 img1 = transform(img1).unsqueeze(0).to(device)
 
 original_img2 = cv2.imread('street3.jpg')
 img2 = cv2.cvtColor(original_img2, cv2.COLOR_BGR2RGB)  # Convert BGR to RGB
+img2 = cv2.resize(img2, (2688, 1520))
 img2 = transform(img1).unsqueeze(0).to(device)
 
 # Perform segmentation
