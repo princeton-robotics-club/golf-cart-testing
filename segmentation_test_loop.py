@@ -6,7 +6,7 @@ import network
 from datasets import Cityscapes
 from time import time
 
-
+print(torch.cuda.is_available())
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')  # Device configuration
 stride = 16 # TODO adjust stride based on image size
 # Load the model
@@ -57,8 +57,8 @@ cv2.imshow('Segmentation Result', cv2.resize(colorized_preds_bgr, (int(colorized
 road_mask = (preds == 0).astype('uint8')
 road_mask = np.squeeze(road_mask, axis=0)
 
-# Apply the binary mask to the original image
-masked_image = cv2.bitwise_and(original_img, original_img, mask=road_mask)
-#print(torch.cuda.memory_allocated()/(1024*1024))
-cv2.imshow('Masked Image', cv2.resize(masked_image, (int(masked_image.shape[1]/2), int(masked_image.shape[0]/2))))
-cv2.waitKey(0)
+# # Apply the binary mask to the original image
+# masked_image = cv2.bitwise_and(original_img, original_img, mask=road_mask)
+# #print(torch.cuda.memory_allocated()/(1024*1024))
+# cv2.imshow('Masked Image', cv2.resize(masked_image, (int(masked_image.shape[1]/2), int(masked_image.shape[0]/2))))
+# cv2.waitKey(0)
