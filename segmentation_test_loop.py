@@ -24,19 +24,21 @@ transform = T.Compose([
 
 # Load and transform the image
 original_img1 = cv2.imread('street2.jpg')
-img1 = cv2.cvtColor(original_img1, cv2.COLOR_BGR2RGB)  # Convert BGR to RGB
-img1 = cv2.resize(img1, (int(2688/4), int(1520/4)))
-img1 = transform(img1).unsqueeze(0).to(device)
+original_img1 = cv2.cvtColor(original_img1, cv2.COLOR_BGR2RGB)  # Convert BGR to RGB
+#original_img1 = cv2.resize(original_img1, (int(2688/1), int(1520/1)))
+original_img1 = cv2.resize(original_img1, (500, 500))
+img1 = transform(original_img1).unsqueeze(0).to(device)
 
 original_img2 = cv2.imread('street3.jpg')
-img2 = cv2.cvtColor(original_img2, cv2.COLOR_BGR2RGB)  # Convert BGR to RGB
-img2 = cv2.resize(img2, (int(2688/4), int(1520/4)))
-img2 = transform(img2).unsqueeze(0).to(device)
+original_img2 = cv2.cvtColor(original_img2, cv2.COLOR_BGR2RGB)  # Convert BGR to RGB
+#original_img2 = cv2.resize(original_img2, (int(2688/1), int(1520/1)))
+original_img2 = cv2.resize(original_img2, (500, 500))
+img2 = transform(original_img2).unsqueeze(0).to(device)
 
 # Perform segmentation
 with torch.no_grad():
     start_time = time()
-    for i in range(20):
+    for i in range(10):
         if i & 1:
             outputs = model(img1)
         else:
@@ -58,7 +60,7 @@ road_mask = (preds == 0).astype('uint8')
 road_mask = np.squeeze(road_mask, axis=0)
 
 # Apply the binary mask to the original image
-masked_image = cv2.bitwise_and(original_img, original_img, mask=road_mask)
+masked_image = cv2.bitwise_and(original_img1, original_img1, mask=road_mask)
 #print(torch.cuda.memory_allocated()/(1024*1024))
 cv2.imshow('Masked Image', cv2.resize(masked_image, (int(masked_image.shape[1]/2), int(masked_image.shape[0]/2))))
 cv2.waitKey(0)
